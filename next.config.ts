@@ -6,7 +6,8 @@ const nextConfig: NextConfig = {
   basePath: "/bayou",
   assetPrefix: "/bayou",
   images: {
-    unoptimized: true,
+    loader: "custom",
+    loaderFile: "./lib/imageLoader.ts",
     formats: ["image/webp", "image/avif"],
     remotePatterns: [],
   },
