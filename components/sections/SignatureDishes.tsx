@@ -25,7 +25,7 @@ function DishCard({ item, index }: { item: MenuItem; index: number }) {
   return (
     <motion.article
       variants={scaleRise}
-      className="group flex-shrink-0 w-64 md:w-72 cursor-pointer"
+      className="group relative flex-shrink-0 w-64 md:w-72 cursor-pointer"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       aria-label={item.name}
@@ -64,34 +64,23 @@ function DishCard({ item, index }: { item: MenuItem; index: number }) {
           className="absolute inset-0 bg-gradient-to-t from-bayou-teal-deep/80 via-bayou-teal-deep/10 to-transparent transition-opacity duration-300"
           style={{ opacity: hovered ? 1 : 0.5 }}
         />
-
-        {/* Price badge — enamel cobalt */}
-        <div className="absolute top-4 right-4">
-          <span className="font-body text-label-lg text-bayou-cream bg-bayou-cobalt/90 backdrop-blur-sm px-3 py-1.5 tracking-widest">
-            {item.price}
-          </span>
-        </div>
       </div>
 
-      {/* Text */}
-      <div className="px-1">
-        <motion.h3
-          className="font-display text-display-sm mb-2"
-          animate={{ color: hovered ? "#B68A4E" : "#243B36" }}
-          transition={{ duration: 0.2 }}
-        >
-          {item.name}
-        </motion.h3>
-
-        <motion.p
-          className="font-body text-body-sm text-bayou-stone leading-relaxed"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: hovered ? 1 : 0.7, height: "auto" }}
-          transition={{ duration: 0.25 }}
-        >
-          {item.description}
-        </motion.p>
+      {/* Price badge — outside arch-top so it isn't clipped */}
+      <div className="absolute top-4 right-0">
+        <span className="font-body text-label-lg text-bayou-cream bg-bayou-cobalt/90 backdrop-blur-sm px-3 py-1.5 tracking-widest">
+          {item.price}
+        </span>
       </div>
+
+      {/* Description on hover only — no name label */}
+      <motion.p
+        className="font-body text-body-sm text-bayou-stone leading-relaxed px-1 mt-1"
+        animate={{ opacity: hovered ? 1 : 0 }}
+        transition={{ duration: 0.25 }}
+      >
+        {item.description}
+      </motion.p>
     </motion.article>
   );
 }
