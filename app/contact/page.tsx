@@ -12,14 +12,11 @@ export const metadata: Metadata = {
     "Bayou is at 8a Oliver Plunkett Street, Cork City. No bookings — just walk in. Open Wednesday to Sunday.",
 };
 
-const openDays = SITE.hours.filter((h) => !("closed" in h && h.closed));
-const closedDays = SITE.hours.filter((h) => "closed" in h && h.closed);
-
 export default function ContactPage() {
   return (
     <main className="bg-bayou-cream min-h-screen">
 
-      {/* ── Page header ───────────────────────────────────────── */}
+      {/* ── Page header ─────────────────────────────────── */}
       <section className="bg-bayou-cream pt-40 pb-16 md:pt-48 md:pb-20" aria-label="Find us">
         <div className="container-site">
           <FadeSlideUp>
@@ -43,12 +40,12 @@ export default function ContactPage() {
 
       <BrassRule className="container-site" />
 
-      {/* ── Main content grid ─────────────────────────────────── */}
+      {/* ── Main content grid ───────────────────────────── */}
       <section className="section-pad" aria-label="Location and hours">
         <div className="container-site">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 xl:gap-24">
 
-            {/* Left column — all the info */}
+            {/* Left — address, hours, contact */}
             <div className="space-y-14">
 
               {/* Address */}
@@ -86,27 +83,22 @@ export default function ContactPage() {
                   <p className="font-body text-label-sm text-bayou-brass tracking-[0.2em] uppercase mb-6">
                     Opening Hours
                   </p>
-                  <div className="space-y-3">
-                    {openDays.map((h) => (
-                      <div key={h.day} className="flex items-baseline justify-between gap-4 border-b border-bayou-ink/8 pb-3">
-                        <span className="font-body text-body-md text-bayou-ink">
+                  <div className="space-y-0">
+                    {SITE.hours.map((h) => (
+                      <div
+                        key={h.day}
+                        className="flex items-baseline justify-between gap-4 border-b border-bayou-ink/10 py-3 last:border-b-0"
+                      >
+                        <span className={`font-body text-body-md ${("closed" in h && h.closed) ? "text-bayou-stone/50" : "text-bayou-ink"}`}>
                           {h.day}
                         </span>
-                        <span className="font-body text-body-md text-bayou-stone tabular-nums">
-                          {"open" in h ? h.open : ""}
-                          {" – "}
-                          {"kitchenClose" in h ? h.kitchenClose : ""}
+                        <span className={`font-body text-body-md tabular-nums ${("closed" in h && h.closed) ? "text-bayou-stone/40 tracking-widest uppercase text-body-xs" : "text-bayou-stone"}`}>
+                          {"closed" in h && h.closed
+                            ? "Closed"
+                            : `${"open" in h ? String(h.open) : ""}–${"kitchenClose" in h ? String(h.kitchenClose) : ""}`}
                         </span>
                       </div>
                     ))}
-                    <div className="flex items-baseline justify-between gap-4 pt-1">
-                      <span className="font-body text-body-md text-bayou-stone">
-                        {closedDays.map(d => d.day).join(" & ")}
-                      </span>
-                      <span className="font-body text-body-sm text-bayou-stone/60 tracking-widest uppercase">
-                        Closed
-                      </span>
-                    </div>
                   </div>
                   <p className="font-script text-bayou-stone text-lg mt-6">
                     — kitchen closes at 15:00, come before then.
@@ -122,7 +114,7 @@ export default function ContactPage() {
                   <p className="font-body text-label-sm text-bayou-brass tracking-[0.2em] uppercase mb-6">
                     Get in touch
                   </p>
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     <div>
                       <p className="font-body text-body-xs text-bayou-stone tracking-widest uppercase mb-1">
                         Phone
@@ -164,14 +156,14 @@ export default function ContactPage() {
 
             </div>
 
-            {/* Right column — map */}
+            {/* Right — map (sticky on desktop) */}
             <FadeSlideUp delay={0.15} className="lg:sticky lg:top-32 lg:self-start">
-              <div className="w-full aspect-[4/3] lg:aspect-[3/4] overflow-hidden border border-bayou-ink/10">
+              <div className="w-full overflow-hidden border border-bayou-ink/10 aspect-[4/3] lg:aspect-[3/4]">
                 <iframe
                   src="https://maps.google.com/maps?q=8a+Oliver+Plunkett+Street+Cork+Ireland&output=embed&z=17"
                   width="100%"
                   height="100%"
-                  style={{ border: 0, display: "block" }}
+                  style={{ display: "block", border: "none" }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
@@ -179,7 +171,7 @@ export default function ContactPage() {
                 />
               </div>
               <p className="font-body text-body-xs text-bayou-stone/60 mt-3 text-center">
-                8a Oliver Plunkett Street, Cork City
+                8a Oliver Plunkett Street · Cork City
               </p>
             </FadeSlideUp>
 
@@ -187,7 +179,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* ── Walk-in strip ─────────────────────────────────────── */}
+      {/* ── Walk-in strip ───────────────────────────────── */}
       <section className="bg-bayou-teal section-pad" aria-label="Visit us">
         <div className="container-site text-center">
           <FadeSlideUp>

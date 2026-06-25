@@ -158,6 +158,11 @@ body {
   border-color: rgba(182, 138, 78, 0.12);
 }
 
+/* ─── No invisible text on first paint ───────────────────── */
+/* Framer Motion animates from opacity:0 — ensure font-face   */
+/* declarations use swap so text shows during font load.      */
+html { font-synthesis: none; }
+
 /* ─── Reduced Motion ─────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
